@@ -30,8 +30,7 @@
 
 (re-frame/reg-event-db
  :bad-http-result
- (fn [db fx]
-   (println "deu ruim o request")
+ (fn [db _]
    db))
 
 (re-frame/reg-event-fx
@@ -41,18 +40,17 @@
     :http-xhrio {:method :get
                  :uri "http://localhost:8081/wordle/new"
                  :timeout 8000
+                 :headers {:accept "application/json"}
                  :response-format (ajax/json-response-format {:keywords? true})
                  :on-success [:good-http-word-sample-result]
                  :on-failure [:bad-http-word-sample-result]}}))
 
 (re-frame/reg-event-db
  :bad-http-word-sample-result
- (fn [db fx]
-   (println (-> fx second))
+ (fn [db _]
    (assoc db :word "not loaded")))
 
 (re-frame/reg-event-db
  :good-http-word-sample-result
  (fn [db fx]
-   (println (-> fx second))
    (assoc db :word (-> fx second :word))))
