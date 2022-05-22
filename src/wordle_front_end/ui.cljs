@@ -1,4 +1,7 @@
-(ns wordle-front-end.ui)
+(ns wordle-front-end.ui
+  (:require [day8.re-frame.http-fx :as http-fx]
+            [re-frame.core :as re-frame]
+            [wordle-front-end.subs :as subs]))
 
 (defn presenter [title]
   [:div.container
@@ -33,16 +36,19 @@
 
 (defn word-input [callback-on-inp]
   [:div.container 
-   [:lable "input"]
    [:input {:type "text"}]
    [:button.btn-primary 
     {:style {:width "100px" :height "30px"}
      :on-click #(do (println "btn-clicked")
-                    #_(callback-on-inp))}
+                    (callback-on-inp))}
     "Enter!"]])
 
-(comment
+(defn cat-fact-ui []
+  (let [fact-sub (re-frame/subscribe [::subs/cat-fact])]
+    [:div.container 
+     [:h2 @fact-sub]]))
 
+(comment
   (->> "abacate"
        ->sequence-letters-div
        reduce-div))

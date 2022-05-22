@@ -5,6 +5,7 @@
    [wordle-front-end.events :as events]
    [wordle-front-end.views :as views]
    [wordle-front-end.config :as config]
+   [day8.re-frame.http-fx :as http-fx]
    ))
 
 
